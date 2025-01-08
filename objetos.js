@@ -170,4 +170,3 @@ let personaString = JSON.stringify(persona5);
 //stringify convierte a cadena o String cada propiedad
 
 console.log(personaString);
-
