@@ -170,3 +170,173 @@ let personaString = JSON.stringify(persona5);
 //stringify convierte a cadena o String cada propiedad
 
 console.log(personaString);
+
+//Métodos GET en objetos JS
+//Métodos que se usan a manera de buenas prácticas que permiten acceder y modificar dichos objetos
+//Permite acceder a los valores de las propiedades
+
+let personaGET = {
+    nombre: 'Marco',
+    apellido: 'Valdiviezo',
+    email: 'mvaldiviezo',
+    edad: 23,
+    get nombreCompleto (){
+        return this.nombre + ' ' + this.apellido;
+    }
+}
+
+console.log(personaGET.nombreCompleto);
+
+//Método set en Objetos de JS
+//Set establecer o modificar los valores de los atributos de los objetos
+
+//Validación
+
+let personaSET = {
+    nombre: 'Marco',
+    apellido: 'Valdiviezo',
+    email: 'mvaldiviezo',
+    edad: 23,
+    idioma: 'es',
+
+    get lang(){
+        return this.idioma.toUpperCase();
+    },
+
+    get nombreCompleto (){
+        return this.nombre + ' ' + this.apellido;
+    }
+}
+
+console.log(personaSET.lang);
+
+//Set
+let personaSET2 = {
+    nombre: 'Marco',
+    apellido: 'Valdiviezo',
+    email: 'mvaldiviezo',
+    edad: 23,
+    idioma: 'es',
+
+    get lang(){
+        return this.idioma.toUpperCase();
+    },
+
+    set lang(lang){
+        this.idioma = this.lang.toUpperCase();
+    },
+
+    get nombreCompleto (){
+        return this.nombre + ' ' + this.apellido;
+    }
+}
+
+console.log(personaSET2.lang);
+
+personaSET2.lang = 'en';
+
+console.log(personaSET2.lang);
+
+//Constructores en JS
+
+//Si se desea crear más objetos del mismo tipo esto NO ES POSIBLE
+//Es por ello que se crean los constructores
+
+//Es una función especial que permite trabajar con objetos en JS
+
+//Función constructora de tipo persona 
+
+function personaFC(nombre, apellido, email){
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.email = email;
+}
+
+let padreFC = new personaFC('Juan', 'Sánchez', 'jsanchez@gmail.com'); //La variable ya no es variable, ahora es un método que permite crear un objeto de tipo persona
+console.log(padreFC);
+
+let madreFC = new personaFC('Laura', 'Moya', 'lmoya@gmail.com');
+console.log(madreFC);
+
+padreFC.tel = '2338912';
+
+console.log(padreFC);
+console.log(madreFC);
+
+//Agregar un método a una función constructora de objetos
+function personaFCM(nombre, apellido, email){
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.email = email;
+    this.nombreCompleto = function(){
+        return this.nombre + ' ' + this.apellido;
+    }
+}
+let padreFCM = new personaFCM('Juan', 'Sánchez', 'jsanchez@gmail.com');
+console.log(padreFCM.nombreCompleto());
+
+let madreFCM = new personaFCM('Laura', 'Moya', 'lmoya@gmail.com');
+console.log(madreFCM.nombreCompleto());
+
+//Uso de prototype
+//Ayuda a crear una nueva propiedad en la función constructora
+
+personaFCM.prototype.telefono = '2338468';
+console.log(padreFCM);
+console.log(madreFCM);
+
+//Uso de Call
+let personaCall1 = {
+    nombre: 'Diego',
+    apellido: 'Salas',
+    nombreCompleto: function () {
+        return this.nombre + ' ' + this.apellido;
+    }
+}
+
+let personaCall2 = {
+    nombre: 'Andres',
+    apellido: 'Farias',
+}
+
+console.log(personaCall1.nombreCompleto());
+console.log(personaCall1.nombreCompleto.call(personaCall2));
+
+//Como pasar parametros a través del método call
+let personaCallP1 = {
+    nombre: 'Diego',
+    apellido: 'Salas',
+    nombreCompleto: function (titulo, telefono) {
+        return titulo + ': ' + this.nombre + ' ' + this.apellido + ' ' + telefono;
+    }
+}
+
+let personaCallP2 = {
+    nombre: 'Andres',
+    apellido: 'Farias',
+}
+
+console.log(personaCallP1.nombreCompleto('Lic', '33333333'));
+console.log(personaCallP1.nombreCompleto.call(personaCallP2, 'Ing', '555555'));
+
+//Uso del método apply
+let personaApply1 = {
+    nombre: 'Diego',
+    apellido: 'Salas',
+    nombreCompleto: function(titulo, telefono) {
+        //return this.nombre + ' ' + this.apellido //Sin parametros
+        return titulo + ': ' + this.nombre + ' ' + this.apellido + ' ' + telefono;
+    }
+}
+
+let personaApply2 = {
+    nombre: 'Andres',
+    apellido: 'Farias',
+}
+
+console.log(personaApply1.nombreCompleto());
+console.log(personaApply2.nombreCompleto.apply(personaApply2));
+
+let arreglo = ['Ing', '999999'];
+
+console.log(personaApply1.nombreCompleto.apply(personaApply2, ['Ing', '9999999']));
